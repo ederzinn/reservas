@@ -1,12 +1,12 @@
 package com.eder.reservas.domain.usuario;
 
-public enum Roles {
+public enum RolesUsuario {
     ADMIN("ROLE_ADMIN"),
     USER("ROLE_USER");
 
     final private String role;
 
-    Roles(String role) { this.role = role; }
+    RolesUsuario(String role) { this.role = role; }
 
     public String getRole() { return this.role; }
 }
