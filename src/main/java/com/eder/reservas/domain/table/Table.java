@@ -21,7 +21,7 @@ public class Table {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String name;
+    private String number;
     private Integer capacity;
     private TableStatus status;
 }
