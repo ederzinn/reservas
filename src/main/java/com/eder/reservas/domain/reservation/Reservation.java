@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Table(name = "reservation")
+@Table(name = "reservations")
 @Entity
 @Getter
 @Setter
@@ -25,7 +25,7 @@ public class Reservation {
     private User user;
     @ManyToOne
     @JoinColumn(name = "table_id")
-    private com.eder.reservas.domain.table.Table Table;
+    private com.eder.reservas.domain.table.Table table;
     private LocalDateTime timestamp;
     private ReservationStatus reservationStatus;
 }
