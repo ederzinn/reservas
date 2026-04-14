@@ -26,6 +26,6 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "table_id")
     private com.eder.reservas.domain.table.Table table;
-    private LocalDateTime timestamp;
+    private LocalDateTime reservationTimestamp;
     private ReservationStatus reservationStatus;
 }
