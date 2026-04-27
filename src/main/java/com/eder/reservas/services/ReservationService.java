@@ -8,8 +8,6 @@ import com.eder.reservas.domain.user.User;
 import com.eder.reservas.repositories.ReservationRepository;
 import com.eder.reservas.repositories.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +24,18 @@ public class ReservationService {
         Table table = tableRepository.findById(reservation.getTable().getId())
                 .orElseThrow(() -> new RuntimeException("Table not Found"));
 
+        if(reservation.getPeople() > table.getCapacity()) {
+            throw new RuntimeException("Amount of people exceeds table capacity");
+        }
         if(table.getStatus() == TableStatus.INACTIVE || table.getStatus() == TableStatus.UNAVAILABLE) {
             throw new RuntimeException("Table not available");
         }
+        if(reservationRepository.existsByTableAndTimestamp(table, reservation.getReservationTimestamp())) {
+            throw new RuntimeException("Table not available at this time");
+        }
+
+        table.setStatus(TableStatus.UNAVAILABLE);
+        tableRepository.save(table);
 
         return reservationRepository.save(reservation);
     }
@@ -40,10 +47,15 @@ public class ReservationService {
     public Reservation cancelReservation(UUID id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
+        Table table  = tableRepository.findById(reservation.getTable().getId())
+                .orElseThrow(() -> new RuntimeException("Table not Found"));
 
         if(reservation.getReservationStatus() == ReservationStatus.CANCELED) {
             throw new RuntimeException("Reservation is already canceled");
         }
+
+        table.setStatus(TableStatus.AVAILABLE);
+        tableRepository.save(table);
 
         reservation.setReservationStatus(ReservationStatus.CANCELED);
         return reservationRepository.save(reservation);
