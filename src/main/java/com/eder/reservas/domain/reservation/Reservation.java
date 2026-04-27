@@ -28,4 +28,5 @@ public class Reservation {
     private com.eder.reservas.domain.table.Table table;
     private LocalDateTime reservationTimestamp;
     private ReservationStatus reservationStatus;
+    private Integer people;
 }
