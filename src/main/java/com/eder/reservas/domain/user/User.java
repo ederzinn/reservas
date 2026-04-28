@@ -1,5 +1,6 @@
 package com.eder.reservas.domain.user;
 
+import com.eder.reservas.dtos.RegisterRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,13 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private UserRole role;
+
+    public User(RegisterRequest request) {
+        this.name = request.name();
+        this.email = request.email();
+        this.password = request.password();
+        this.role = request.role();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
