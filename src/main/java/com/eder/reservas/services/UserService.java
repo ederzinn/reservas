@@ -30,7 +30,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public String authenticate(String email, String password) {
+    public String login(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Email not found"));
 
