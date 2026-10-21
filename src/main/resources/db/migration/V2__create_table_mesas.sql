@@ -1,0 +1,6 @@
+CREATE TABLE mesas (
+    id UUID PRIMARY KEY,
+    numero INTEGER UNIQUE NOT NULL,
+    capacidade INTEGER NOT NULL,
+    status VARCHAR(20) NOT NULL
+);
